@@ -1,0 +1,32 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.6
+
+
+suites:
+  - name: web
+    run_list:
+      - recipe[yum::epel]
+    #  - recipe[essential_software::git]
+      - recipe[nginx::default]
+    attributes:
+
+  - name: app1
+    run_list:
+      - recipe[yum::epel]
+    #  - recipe[essential_software::git]
+      - recipe[golang::default]
+    attributes:
+
+  - name: app2
+    run_list:
+     - recipe[yum::epel]
+  #   - recipe[essential_software::git]
+     - recipe[golang::default]
+    attributes:
