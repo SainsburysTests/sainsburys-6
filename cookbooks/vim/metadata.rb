@@ -1,0 +1,7 @@
+name 'vim'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures vim'
+long_description 'Installs/Configures vim'
+version '0.1.0'
