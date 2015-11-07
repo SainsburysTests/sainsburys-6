@@ -3,52 +3,52 @@ driver:
   name: vagrant
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
-  - name: web
+  - name: sainsburys
     driver:
      box: centos-6.7
      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.7_chef-provisionerless.box
-     network:
-      - ["forwarded_port", { guest: 80, host: 8080 }]
-      - ["private_network", { ip: "192.168.33.2" }]
+
+suites:
+  - name: web
+    driver:
+      vm_hostname: web.sainsburys.internal
+    network:
+     - ["forwarded_port", { guest: 80, host: 8080 }]
+     - ["private_network", { ip: "192.168.33.2" }]
     run_list:
-      - recipe[yum::epel]
-      - recipe[vim::default]
-      - recipe[nginx::default]
+     - recipe[host_file_update::default]
+     - recipe[yum::epel]
+     - recipe[vim::default]
+     - recipe[nginx::default]
+    attributes:
 
   - name: app1
     driver:
-     box: centos-6.7
-     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.7_chef-provisionerless.box
-
-     network:
-      - ["forwarded_port", {guest: 8484, host: 8081}]
-      - ["private_network", { ip: "192.168.33.3" }]
+      vm_hostname: app1.sainsburys.internal
+    network:
+     - ["forwarded_port", {guest: 8484, host: 8081}]
+     - ["private_network", { ip: "192.168.33.3" }]
     run_list:
-      - recipe[yum::epel]
-      - recipe[vim::default]
-      - recipe[git::default]
-      - recipe[golang::default]
-      - recipe[golang::app]
+     - recipe[host_file_update::default]
+     - recipe[yum::epel]
+     - recipe[vim::default]
+     - recipe[git::default]
+     - recipe[golang::default]
+     - recipe[golang::app]
 
   - name: app2
     driver:
-     box: centos-6.7
-     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.7_chef-provisionerless.box
-
-     network:
-      - ["forwarded_port", {guest: 8484, host: 8082}]
-      - ["private_network", { ip: "192.168.33.4" }]
+      vm_hostname: app2.sainsburys.internal
+    network:
+     - ["forwarded_port", {guest: 8484, host: 8081}]
+     - ["private_network", { ip: "192.168.33.4" }]
     run_list:
-      - recipe[yum::epel]
-      - recipe[vim::default]
-      - recipe[git::default]
-      - recipe[golang::default]
-      - recipe[golang::app]
-
-suites:
-  - name: sainsburys
-    run_list:
-    attributes:
+     - recipe[host_file_update::default]
+     - recipe[yum::epel]
+     - recipe[vim::default]
+     - recipe[git::default]
+     - recipe[golang::default]
+     - recipe[golang::app]

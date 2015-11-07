@@ -4,6 +4,7 @@ git "/opt/go/src" do
      action :checkout
 end
 
+log "Manually compiling go app"
 bash "compile_app" do
   user 'root'
   code <<-EOF
@@ -14,6 +15,7 @@ bash "compile_app" do
     EOF
 end
 
+log "Executing the compiled app, and placing it in the background with &"
 execute 'sainsburys_app' do
   command '/opt/go/bin/app &'
 end
